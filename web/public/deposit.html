@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Init</title>
+  <title>Deposit</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -86,39 +86,16 @@
     <a href="./index.html"><button type="button" class="btn btn-success">Home</button></a>
     <br><br><hr>
 
-      <h1>Init Escrow</h1>
+      <h1>Deposit to Escrow</h1>
       <hr>
       <form>
 		  <div class="input-group">
-		    <span class="input-group-addon">Seller Address</span>
-		    <input id="selleraddress" type="text" class="form-control" name="email" placeholder="Email">
+		    <span class="input-group-addon">Deposit Amount</span>
+		    <input id="depositamount" type="number" class="form-control" name="email" placeholder="Email">
 		  </div>
-		  <br>
-
-		  <div class="input-group">
-		    <span class="input-group-addon">Buyer Address</span>
-		    <input id="buyeraddress" type="text" class="form-control" name="password" placeholder="Password">
-		  </div>
-		  <br>
-
-		  <div class="input-group">
-		    <span class="input-group-addon">Owner Fee %</span>
-		    <input id="ownerfee" type="text" class="form-control" name="msg" placeholder="Additional Info">
-		  </div>
-		  <br>
-
-			<div class="docs-datepicker">
-          <div class="input-group">
-          	<span class="input-group-addon">Return Deadline</span>
-            <input type="text" class="form-control docs-date" id="returndate" name="bidclose" placeholder="Choose Contract Closing Date">
-            <div class="input-group-append">
-            </div>
-          </div>
-          <div class="docs-datepicker-container"></div>
-        </div>
         <br>
 
-        <button type="button" id="createescrow" class="btn btn-primary">Create Escrow</button>
+        <button id="deposit" type="button" class="btn btn-primary">Deposit</button>
 
 	  </form>
 
@@ -189,23 +166,79 @@ switch (netId) {
     "type": "function"
   },
   {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "allEscrows",
+    "outputs": [
+      {
+        "name": "serviceman",
+        "type": "address"
+      },
+      {
+        "name": "client",
+        "type": "address"
+      },
+      {
+        "name": "charge",
+        "type": "uint256"
+      },
+      {
+        "name": "escrowFeePercent",
+        "type": "uint256"
+      },
+      {
+        "name": "escrowStatus",
+        "type": "uint8"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "constant": false,
-    "inputs": [],
-    "name": "approve",
+    "inputs": [
+      {
+        "name": "_seller",
+        "type": "address"
+      },
+      {
+        "name": "_buyer",
+        "type": "address"
+      },
+      {
+        "name": "_feePercent",
+        "type": "uint256"
+      },
+      {
+        "name": "_blockNum",
+        "type": "uint256"
+      }
+    ],
+    "name": "initEscrow",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
+    "constant": false,
+    "inputs": [],
+    "name": "depositToEscrow",
+    "outputs": [],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
     "constant": true,
-    "inputs": [
-      {
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "name": "balances",
+    "inputs": [],
+    "name": "getBlockNumber",
     "outputs": [
       {
         "name": "",
@@ -217,21 +250,86 @@ switch (netId) {
     "type": "function"
   },
   {
-    "constant": false,
+    "constant": true,
     "inputs": [],
-    "name": "abort",
-    "outputs": [],
+    "name": "blockNumber",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "payable": false,
-    "stateMutability": "nonpayable",
+    "stateMutability": "view",
     "type": "function"
   },
   {
-    "constant": false,
-    "inputs": [],
-    "name": "refund",
-    "outputs": [],
+    "constant": true,
+    "inputs": [
+      {
+        "name": "id",
+        "type": "uint256"
+      }
+    ],
+    "name": "getEscrowRecord",
+    "outputs": [
+      {
+        "components": [
+          {
+            "name": "serviceman",
+            "type": "address"
+          },
+          {
+            "name": "client",
+            "type": "address"
+          },
+          {
+            "name": "charge",
+            "type": "uint256"
+          },
+          {
+            "name": "escrowFeePercent",
+            "type": "uint256"
+          },
+          {
+            "name": "escrowStatus",
+            "type": "uint8"
+          }
+        ],
+        "name": "",
+        "type": "tuple"
+      }
+    ],
     "payable": false,
-    "stateMutability": "nonpayable",
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "escrowCharge",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "eState",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint8"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -251,35 +349,7 @@ switch (netId) {
   {
     "constant": true,
     "inputs": [],
-    "name": "sellerBalance",
-    "outputs": [
-      {
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [],
-    "name": "fp",
-    "outputs": [
-      {
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [],
-    "name": "totalContractBalance",
+    "name": "feePercent",
     "outputs": [
       {
         "name": "",
@@ -293,47 +363,7 @@ switch (netId) {
   {
     "constant": false,
     "inputs": [],
-    "name": "payOut",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "_seller",
-        "type": "address"
-      },
-      {
-        "name": "_buyer",
-        "type": "address"
-      },
-      {
-        "name": "_fp",
-        "type": "uint256"
-      }
-    ],
-    "name": "setup",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [],
-    "name": "deposit",
-    "outputs": [],
-    "payable": true,
-    "stateMutability": "payable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [],
-    "name": "fee",
+    "name": "endEscrow",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
@@ -342,7 +372,39 @@ switch (netId) {
   {
     "constant": true,
     "inputs": [],
-    "name": "escrow",
+    "name": "escrowID",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [],
+    "name": "cancelEscrow",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [],
+    "name": "approveEscrow",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "escrowOwner",
     "outputs": [
       {
         "name": "",
@@ -356,7 +418,35 @@ switch (netId) {
   {
     "constant": true,
     "inputs": [],
-    "name": "buyerBalance",
+    "name": "hasEscrowExpired",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "checkEscrowStatus",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint8"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "totalEscrowBalance",
     "outputs": [
       {
         "name": "",
@@ -372,12 +462,51 @@ switch (netId) {
     "payable": false,
     "stateMutability": "nonpayable",
     "type": "constructor"
+  },
+  {
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "fallback"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "depositor",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "name": "deposited",
+        "type": "uint256"
+      }
+    ],
+    "name": "Deposit",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "blockNo",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "name": "contractBalance",
+        "type": "uint256"
+      }
+    ],
+    "name": "ServicePayment",
+    "type": "event"
   }
 ]);
-var test = testContract.at("0x6431fd0c29d024c5b04c7dab157fccd329e62e55");
+var test = testContract.at("0xb2c303946dd1ad9a3db4f8583a2e4014e66a5ad2");
 
-$("#createescrow").click(function() {
-  test.setup($("#selleraddress").val(),$("#buyeraddress").val(),$("#ownerfee").val(),(error,result) => (console.log(result)));
+$("#deposit").click(function() {
+  test.depositToEscrow.sendTransaction({value:($("#depositamount").val())}, (error, result) => (console.log(result)));
 });
 </script>
 
