@@ -1,0 +1,19 @@
+{
+  "name": "test-web3-2",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "web3": "github:ethereum/web3.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://bitbucket.org/rounakdatta/escrow-dapp.git"
+  },
+  "homepage": "https://bitbucket.org/rounakdatta/escrow-dapp#readme",
+  "description": ""
+}
