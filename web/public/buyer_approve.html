@@ -106,10 +106,6 @@
   </div>
 </div>
 
-<footer class="container-fluid text-center">
-  <p>Footer Text</p>
-</footer>
-
 <script type="text/javascript" src="https://fengyuanchen.github.io/datepicker/js/datepicker.js"></script>
 <script type="text/javascript" src="https://fengyuanchen.github.io/datepicker/js/datepicker.en-US.js"></script>
 <script type="text/javascript" src="https://fengyuanchen.github.io/datepicker/js/main.js"></script>
@@ -154,6 +150,34 @@ switch (netId) {
       {
         "name": "",
         "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "buyerApproval",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "sellerApproval",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
       }
     ],
     "payable": false,
@@ -247,6 +271,34 @@ switch (netId) {
   {
     "constant": true,
     "inputs": [],
+    "name": "getEscrowContractAddress",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "sellerAmount",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
     "name": "blockNumber",
     "outputs": [
       {
@@ -316,6 +368,20 @@ switch (netId) {
   {
     "constant": true,
     "inputs": [],
+    "name": "feeAmount",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
     "name": "eState",
     "outputs": [
       {
@@ -366,12 +432,59 @@ switch (netId) {
   },
   {
     "constant": true,
+    "inputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "deposits",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
     "inputs": [],
     "name": "escrowID",
     "outputs": [
       {
         "name": "",
         "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "hasBuyerApproved",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "getAllDeposits",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256[]"
       }
     ],
     "payable": false,
@@ -414,6 +527,20 @@ switch (netId) {
     "constant": true,
     "inputs": [],
     "name": "hasEscrowExpired",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "hasSellerApproved",
     "outputs": [
       {
         "name": "",
@@ -498,7 +625,7 @@ switch (netId) {
     "type": "event"
   }
 ]);
-var test = testContract.at("0xb2c303946dd1ad9a3db4f8583a2e4014e66a5ad2");
+var test = testContract.at("0x1ebedfba89d3a809da22721cade6b0261966accd");
 
 $("#buyerapprove").click(function() {
   test.approveEscrow((error,result) => (console.log(result)));

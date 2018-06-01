@@ -1,147 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>End Escrow</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://fengyuanchen.github.io/datepicker/css/datepicker.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+"use strict"
 
-  <style>
-    /* Remove the navbar's default margin-bottom and rounded borders */ 
-    .navbar {
-      margin-bottom: 0;
-      border-radius: 0;
-    }
-    
-    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
-    .row.content {height: 600px}
-    
-    /* Set gray background color and 100% height */
-    .sidenav {
-      padding-top: 20px;
-      background-color: #f1f1f1;
-      height: 100%;
-    }
-    
-    /* Set black background color, white text and some padding */
-    footer {
-      background-color: #555;
-      color: white;
-      padding: 15px;
-      position:absolute;
-   	  bottom:0;
-      width:100%;
-      height:60px;  
-    }
-    
-    /* On small screens, set height to 'auto' for sidenav and grid */
-    @media screen and (max-width: 767px) {
-      .sidenav {
-        height: auto;
-        padding: 15px;
-      }
-      .row.content {height:auto;} 
-    }
-  </style>
-  <script src="./node_modules/web3/dist/web3.min.js"></script>
-</head>
-<body>
+const Web3 = require('web3')
+const express = require('express')
+const http = require('http');
+const fs = require('fs');
+const coder = require('web3/lib/solidity/coder');  
+const CryptoJS = require('crypto-js');
 
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>                        
-      </button>
-      <a class="navbar-brand" href="#">Logo</a>
-    </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Home</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Projects</a></li>
-        <li><a href="#">Contact</a></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
-  
-<div class="container-fluid text-center">    
-  <div class="row content">
-    <div class="col-sm-2 sidenav">
-      <p><a href="#">Link</a></p>
-      <p><a href="#">Link</a></p>
-      <p><a href="#">Link</a></p>
-    </div>
-    <div class="col-sm-8 text-center">
-      <br>
-    <a href="./index.html"><button type="button" class="btn btn-success">Home</button></a>
-    <br><br><hr>
+const app = express();
 
-      <h1>End</h1>
-      <hr>
-      <form>
+const bodyParser = require('body-parser');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-        <button id="endescrow" type="button" class="btn btn-primary">End Escrow</button>
+app.use(express.json());
+app.use(express.urlencoded());
 
-	  </form>
-
-    </div>
-    <div class="col-sm-2 sidenav">
-      <div class="well">
-        <p>ADS</p>
-      </div>
-      <div class="well">
-        <p>ADS</p>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script type="text/javascript" src="https://fengyuanchen.github.io/datepicker/js/datepicker.js"></script>
-<script type="text/javascript" src="https://fengyuanchen.github.io/datepicker/js/datepicker.en-US.js"></script>
-<script type="text/javascript" src="https://fengyuanchen.github.io/datepicker/js/main.js"></script>
-  <script>
-     if(typeof web3 !== 'undefined')
-     {
-       web3 = new Web3(web3.currentProvider);
-     }
-     else
-     {
-       web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
-     }
-     web3.version.getNetwork((err, netId) => {
-switch (netId) {
-  case "1":
-    console.log('This is mainnet')
-    break
-  case "2":
-    console.log('This is the deprecated Morden test network.')
-    break
-  case "3":
-    console.log('This is the ropsten test network.')
-    break
-  case "4":
-    console.log('This is the Rinkeby test network.')
-    break
-  case "42":
-    console.log('This is the Kovan test network.')
-    break
-  default:
-    console.log('This is an unknown network.')
-}
-})
-
-     web3.eth.defaultAccount=web3.eth.accounts[0];
-     var testContract = web3.eth.contract([
+const abiArray = [
   {
     "constant": true,
     "inputs": [],
@@ -624,13 +499,56 @@ switch (netId) {
     "name": "ServicePayment",
     "type": "event"
   }
-]);
-var test = testContract.at("0x1ebedfba89d3a809da22721cade6b0261966accd");
+];
 
-$("#endescrow").click(function() {
-  test.endEscrow((error,result) => (console.log(result)));
+const web3 = new Web3(web3.currentProvider);
+const escrowContract =  web3.eth.contract(abiArray).at('0x1ebedfba89d3a809da22721cade6b0261966accd');
+
+app.post('/init', function(req, res) {
+	var sellerAddress = req.body.selleraddress;
+	var buyerAddress = req.body.buyeraddress;
+	var ownerFee = req.body.ownerfee;
+	var returnDate = req.body.returndate;
+
+	escrowContract.initEscrow(sellerAddress, buyerAddress, ownerFee, returnDate, (error, result) => (res.send(result)));
 });
-</script>
 
-</body>
-</html>
+app.post('/deposit', function(req, res) {
+	var amount = req.body.depositamount;
+
+	escrowContract.depositToEscrow.sendTransaction({value: amount}, (error, result) => (res.send(result)));
+});
+
+app.post('/buyer_approve', function(req, res) {
+	escrowContract.approveEscrow((error,result) => (res.send(result)));
+});
+
+app.post('/seller_approve', function(req, res) {
+	escrowContract.approveEscrow((error,result) => (res.send(result)));
+});
+
+app.post('/seller_approve', function(req, res) {
+	escrowContract.endEscrow((error,result) => (res.send(result)));
+});
+
+app.get('/getEscrowBalance', function(req, res) {
+	escrowContract.totalEscrowBalance(function(error, result) {
+		res.send(result);
+	});
+});
+
+app.get('/getEscrowStatus', function(req, res) {
+	escrowContract.checkEscrowStatus(function(error, result) {
+		res.send(result);
+	});	
+});
+
+app.get('/', function (req, res) {
+  res.send('Escrow dapp API');
+});
+
+var server = http.createServer(app);
+
+server.listen(3000, function () {
+  console.log('Escrow dapp listening on port 3000')
+});

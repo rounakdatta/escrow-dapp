@@ -1,7 +1,7 @@
 pragma solidity 0.4.21;
 pragma experimental ABIEncoderV2;
 
-import "../math/SafeMath.sol";
+import "./SafeMath.sol";
 
 
 contract Escrow {
@@ -15,8 +15,12 @@ contract Escrow {
     uint public escrowID;
     uint256 public escrowCharge;
 
-    bool private sellerApproval;
-    bool private buyerApproval;
+    bool public sellerApproval;
+    bool public buyerApproval;
+    
+    uint256[] public deposits;
+    uint256 public feeAmount;
+    uint256 public sellerAmount;
 
     enum EscrowState { unInitialized, initialized, buyerDeposited, serviceApproved, escrowComplete, escrowCancelled }
     EscrowState public eState = EscrowState.unInitialized;
@@ -77,6 +81,7 @@ contract Escrow {
         revert();
     }
 
+
     function initEscrow(address _seller, address _buyer, uint _feePercent, uint256 _blockNum) public onlyEscrowOwner {
         require((_seller != msg.sender) && (_buyer != msg.sender));
         escrowID += 1;
@@ -92,6 +97,7 @@ contract Escrow {
 
     function depositToEscrow() public payable checkBlockNumber onlyBuyer {
         balances[buyer] = SafeMath.add(balances[buyer], msg.value);
+        deposits.push(msg.value);
         escrowCharge += msg.value;
         eState = EscrowState.buyerDeposited;
         emit Deposit(msg.sender, msg.value); // solhint-disable-line
@@ -133,6 +139,32 @@ contract Escrow {
         return eState;
     }
     
+    function getEscrowContractAddress() public view returns (address) {
+        return address(this);
+    }
+    
+    function getAllDeposits() public view returns (uint256[]) {
+        return deposits;
+    }
+    
+    function hasBuyerApproved() public view returns (bool) {
+        if(buyerApproval) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    function hasSellerApproved() public view returns (bool) {
+        if(sellerApproval) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    
     function totalEscrowBalance() public view returns (uint256) {
         return address(this).balance;
     }
@@ -161,11 +193,13 @@ contract Escrow {
         balances[buyer] = SafeMath.sub(balances[buyer], address(this).balance);
         balances[seller] = SafeMath.add(balances[seller], address(this).balance);
         eState = EscrowState.escrowComplete;
+        sellerAmount = address(this).balance;
         seller.transfer(address(this).balance);
     }
 
     function fee() private {
         uint totalFee = address(this).balance * (feePercent / 100);
+        feeAmount = totalFee;
         escrowOwner.transfer(totalFee);
     }
 
