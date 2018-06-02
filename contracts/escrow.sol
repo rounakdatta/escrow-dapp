@@ -3,7 +3,25 @@ pragma experimental ABIEncoderV2;
 
 import "./SafeMath.sol";
 
-
+contract Factory {
+    
+    address[] allEscrowContracts;
+    uint256 public escrowCount;
+    
+    function Factory() public {
+        escrowCount = 0;
+    }
+    
+    function createContract() public {
+        address newContract = new Escrow(escrowCount++);
+        allEscrowContracts.push(newContract);
+    }
+    
+    function getByID(uint256 queryID) public view returns (address) {
+        return allEscrowContracts[queryID];
+    }
+}
+    
 contract Escrow {
     mapping (address => uint256) private balances;
 
@@ -70,9 +88,9 @@ contract Escrow {
         }
     }
 
-    function Escrow() public {
+    function Escrow(uint256 _escrowID) public {
         escrowOwner = msg.sender;
-        escrowID = 0;
+        escrowID = _escrowID;
         escrowCharge = 0;
     }
 
