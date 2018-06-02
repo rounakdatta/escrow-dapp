@@ -3,9 +3,10 @@ pragma experimental ABIEncoderV2;
 
 import "./SafeMath.sol";
 
+
 contract Factory {
     
-    address[] allEscrowContracts;
+    address[] public allEscrowContracts;
     uint256 public escrowCount;
     
     function Factory() public {
@@ -22,6 +23,7 @@ contract Factory {
     }
 }
     
+
 contract Escrow {
     mapping (address => uint256) private balances;
 
@@ -99,7 +101,6 @@ contract Escrow {
         revert();
     }
 
-
     function initEscrow(address _seller, address _buyer, uint _feePercent, uint256 _blockNum) public onlyEscrowOwner {
         require((_seller != msg.sender) && (_buyer != msg.sender));
         escrowID += 1;
@@ -166,19 +167,17 @@ contract Escrow {
     }
     
     function hasBuyerApproved() public view returns (bool) {
-        if(buyerApproval) {
+        if (buyerApproval) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
 
     function hasSellerApproved() public view returns (bool) {
-        if(sellerApproval) {
+        if (sellerApproval) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
