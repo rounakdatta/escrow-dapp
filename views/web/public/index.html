@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Escrow Home</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://fengyuanchen.github.io/datepicker/css/datepicker.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <style>
+    /* Remove the navbar's default margin-bottom and rounded borders */ 
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+    
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 600px}
+    
+    /* Set gray background color and 100% height */
+    .sidenav {
+      padding-top: 20px;
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+    
+    /* Set black background color, white text and some padding */
+    footer {
+      background-color: #555;
+      color: white;
+      padding: 15px;
+      position:absolute;
+   	  bottom:0;
+      width:100%;
+      height:60px;  
+    }
+    
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height:auto;} 
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="https://quillhash.com/">QuillHash</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><span class="glyphicon glyphicon-chevron-left"></span> using Solidity & Node.js <span class="glyphicon glyphicon-chevron-right"></span></a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+  
+<div class="container-fluid text-center">    
+  <div class="row content">
+    <div class="col-sm-12 text-center"> 
+      <br>
+      <a href="/"><button type="button" class="btn btn-success">Home</button></a>
+      <hr>
+
+      <form>
+        <button id="createnewcontract" type="button" class="btn btn-primary">Create New Escrow Contract</button>
+    </form>
+
+    <br><hr>
+
+    <form action="/initatecontract" method="post">
+      <div class="input-group">
+        <span class="input-group-addon">Load Escrow Contract <b>by Address</b></span>
+        <input id="contractaddress" name="contractaddress" class="form-control" name="email" placeholder="Email">
+      </div>
+        <br>
+
+        <button id="loadcontract" type="submit" name="loadcontract" class="btn btn-primary">Load</button>
+
+    </form>
+
+    <div id= "box2"></div>
+
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="https://fengyuanchen.github.io/datepicker/js/datepicker.js"></script>
+<script type="text/javascript" src="https://fengyuanchen.github.io/datepicker/js/datepicker.en-US.js"></script>
+<script type="text/javascript" src="https://fengyuanchen.github.io/datepicker/js/main.js"></script>
+<script>
+     if(typeof web3 !== 'undefined')
+     {
+       web3 = new Web3(web3.currentProvider);
+     }
+     else
+     {
+       web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+     }
+     web3.version.getNetwork((err, netId) => {
+switch (netId) {
+  case "1":
+    console.log('This is mainnet')
+    break
+  case "2":
+    console.log('This is the deprecated Morden test network.')
+    break
+  case "3":
+    console.log('This is the ropsten test network.')
+    break
+  case "4":
+    console.log('This is the Rinkeby test network.')
+    break
+  case "42":
+    console.log('This is the Kovan test network.')
+    break
+  default:
+    console.log('This is an unknown network.')
+}
+})
+
+var factoryAbiArray = [
+  {
+    "constant": false,
+    "inputs": [],
+    "name": "createContract",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "allEscrowContracts",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "escrowCount",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "factoryOwner",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "getAllContracts",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address[]"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "queryID",
+        "type": "uint256"
+      }
+    ],
+    "name": "getByID",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  }
+];
+
+web3.eth.defaultAccount=web3.eth.accounts[0];
+var testContract = web3.eth.contract(factoryAbiArray);
+var test = testContract.at("0x097b93f1f33d1FB20F5B5133400299A520B9310D");
+
+$("#createnewcontract").click(function() {
+  test.createContract((error,result) => (console.log(result)));
+
+});
+
+  var html2 = "<br>"
+  test.getAllContracts(function(error, allContracts) {
+    html2 += "<ul class=\"list-group\">"
+
+    for(var j = 0; j < allContracts.length; j++) {
+      html2 += ("<li class=\"list-group-item\">" + allContracts[j] + "</li>")
+    }
+    html2 += "</ul>";
+
+    document.getElementById("box2").innerHTML = html2;
+  });
+
+
+</script>
+
+</body>
+</html>

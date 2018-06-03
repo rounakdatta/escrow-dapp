@@ -1,4 +1,4 @@
-pragma solidity 0.4.21;
+pragma solidity ^0.4.21;
 pragma experimental ABIEncoderV2;
 
 import "./SafeMath.sol";
@@ -8,14 +8,20 @@ contract Factory {
     
     address[] public allEscrowContracts;
     uint256 public escrowCount;
+    address public factoryOwner;
     
     function Factory() public {
+        factoryOwner = msg.sender;
         escrowCount = 0;
     }
     
     function createContract() public {
-        address newContract = new Escrow(escrowCount++);
+        address newContract = new Escrow(factoryOwner, escrowCount++);
         allEscrowContracts.push(newContract);
+    }
+    
+    function getAllContracts() public view returns (address[]) {
+        return allEscrowContracts;
     }
     
     function getByID(uint256 queryID) public view returns (address) {
@@ -90,8 +96,8 @@ contract Escrow {
         }
     }
 
-    function Escrow(uint256 _escrowID) public {
-        escrowOwner = msg.sender;
+    function Escrow(address fOwner, uint256 _escrowID) public {
+        escrowOwner = fOwner;
         escrowID = _escrowID;
         escrowCharge = 0;
     }

@@ -2,8 +2,12 @@ const http = require('http');
 const fs = require('fs');
 const express = require('express')
 const path = require('path');
+var bodyParser = require('body-parser');
 
 const app = express(); 
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json())
 
 app.use(express.static(path.resolve(`${__dirname}/web/public`)));
 console.log(`${__dirname}/web`);
@@ -25,8 +29,36 @@ app.use((err, req, res, next) => {
   }
 });
 
+app.set('views', __dirname + '/views');
+app.engine('html', require('ejs').renderFile); 
+app.use(express.static(__dirname + '/views/web/public'));
+
+var currentContract = 0;
+
 app.get('/', (req, res, next) => {
-  res.sendFile(path.resolve(`${__dirname}/web/public/index.html`));
+  currentContract = 0;
+  res.render('web/public/index.html');
+});
+
+app.post('/initatecontract', (req, res, next) => {
+  currentContract = req.body.contractaddress;
+  res.render('web/public/contract.html', {currentContract:currentContract});
+});
+
+app.post('/init', (req, res, next) => {
+  res.render('web/public/init.html', {currentContract:currentContract});
+});
+
+app.post('/deposit', (req, res, next) => {
+  res.render('web/public/deposit.html', {currentContract:currentContract});
+});
+
+app.post('/approve', (req, res, next) => {
+  res.render('web/public/approve.html', {currentContract:currentContract});
+});
+
+app.post('/end', (req, res, next) => {
+  res.render('web/public/end.html', {currentContract:currentContract});
 });
 
 var server = http.createServer(app);
