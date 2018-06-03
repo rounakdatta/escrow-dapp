@@ -133,6 +133,20 @@ switch (netId) {
 
 var factoryAbiArray = [
   {
+    "constant": true,
+    "inputs": [],
+    "name": "getAllContracts",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address[]"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "constant": false,
     "inputs": [],
     "name": "createContract",
@@ -140,12 +154,6 @@ var factoryAbiArray = [
     "payable": false,
     "stateMutability": "nonpayable",
     "type": "function"
-  },
-  {
-    "inputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "constructor"
   },
   {
     "constant": true,
@@ -182,34 +190,6 @@ var factoryAbiArray = [
   },
   {
     "constant": true,
-    "inputs": [],
-    "name": "factoryOwner",
-    "outputs": [
-      {
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [],
-    "name": "getAllContracts",
-    "outputs": [
-      {
-        "name": "",
-        "type": "address[]"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
     "inputs": [
       {
         "name": "queryID",
@@ -226,12 +206,18 @@ var factoryAbiArray = [
     "payable": false,
     "stateMutability": "view",
     "type": "function"
+  },
+  {
+    "inputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "constructor"
   }
 ];
 
 web3.eth.defaultAccount=web3.eth.accounts[0];
 var testContract = web3.eth.contract(factoryAbiArray);
-var test = testContract.at("0x097b93f1f33d1FB20F5B5133400299A520B9310D");
+var test = testContract.at("0xafe50472d6D1163442C60ad291802B36597bC600");
 
 $("#createnewcontract").click(function() {
   test.createContract((error,result) => (console.log(result)));
