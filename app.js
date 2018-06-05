@@ -57,6 +57,11 @@ app.post('/approve', (req, res, next) => {
   res.render('web/public/approve.html', {currentContract:currentContract});
 });
 
+app.post('/cancel', (req, res, next) => {
+  res.render('web/public/cancel.html', {currentContract:currentContract});
+});
+
+
 app.post('/end', (req, res, next) => {
   res.render('web/public/end.html', {currentContract:currentContract});
 });

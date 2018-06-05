@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Escrow Home</title>
+  <title>Escrow Cancellation</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -46,6 +46,7 @@
       .row.content {height:auto;} 
     }
   </style>
+  <script src="./node_modules/web3/dist/web3.min.js"></script>
 </head>
 <body>
 
@@ -71,32 +72,22 @@
   <div class="row content">
     <div class="col-sm-12 text-center"> 
       <br>
-      <a href="/"><button id="gohome" type="button" class="btn btn-success">Home</button></a>
-      <hr>
+    <a href="/"><button type="button" class="btn btn-success">Home</button></a>
+    <br><br><hr>
 
-    <form action="/init" method="post">
-      <button type="submit" id="inite" class="btn btn-primary">Init Escrow</button><br><br>
-    </form>
-    <form action="/deposit" method="post">    
-      <button type="submit" id="bd" class="btn btn-primary">Buyer Deposit</button><br><br>
-    </form>
-    <form action="/approve" method="post">
-      <button type="submit" id="eapp" class="btn btn-primary">Escrow Approval</button><br><br>
-    </form>
-    <form action="/cancel" method="post">
-      <button type="submit" id="capp" class="btn btn-primary">Escrow Cancellation</button><br><br>
-    </form>
-    <!--
-    <form action="/end" method="post">
-      <button type="submit" class="btn btn-primary">End Escrow</button>
-    </form>
-  -->
-
-      <br><hr>
-      <div id= "myaddr"></div>
+      <h1>Cancel Escrow</h1>
       <hr>
-      <div id= "box"></div>
-      <div id= "box2"></div>
+      <h6>Both Buyer and Seller need to cancel the Escrow</h6>
+      <br>
+      <form>
+
+        <button id="cancel" type="button" class="btn btn-primary">Cancel Escrow</button>
+
+	  </form>
+
+    <div id= "box2"></div>
+    <div id= "box3"></div>
+    <div id= "box"></div>
 
     </div>
   </div>
@@ -105,7 +96,7 @@
 <script type="text/javascript" src="https://fengyuanchen.github.io/datepicker/js/datepicker.js"></script>
 <script type="text/javascript" src="https://fengyuanchen.github.io/datepicker/js/datepicker.en-US.js"></script>
 <script type="text/javascript" src="https://fengyuanchen.github.io/datepicker/js/main.js"></script>
-<script type="text/javascript" src="js/constants.js"></script>
+<script type="text/javascript" src="js/constants.js"></script> 
   <script>
      if(typeof web3 !== 'undefined')
      {
@@ -140,53 +131,31 @@ switch (netId) {
 var thisContract =  "<%= currentContract %>";
 console.log(thisContract);
 console.log(abiArray);
-document.getElementById("myaddr").innerHTML = thisContract;
 
 web3.eth.defaultAccount=web3.eth.accounts[0];
 var testContract = web3.eth.contract(abiArray);
 var test = testContract.at(thisContract);
 
+$("#cancel").click(function() {
+  test.cancelEscrow((error,result) => (console.log(result)));
+});
+
+var html2 = "<br>"
+test.hasBuyerApproved(function(error, result) {
+  html2 += "<hr><br><h5>Buyer Approval : <b>" + result + "</b></h5>"
+  document.getElementById("box2").innerHTML = html2;
+});
+
+var html3 = ""
+test.hasSellerApproved(function(error, result) {
+  html3 += "<hr><br><h5>Seller approval : <b>" + result + "</b></h5>"
+  document.getElementById("box3").innerHTML = html3;
+});
+
 var html = ""
-test.checkEscrowStatus(function(error, eStatus) {
-	let foo = "";
-	eStatus = eStatus.valueOf();
-	switch(eStatus) {
-		case "0":
-			foo = "Escrow UnInitialized";
-			break;
-		case "1":
-			foo = "Initialized";
-			break;
-		case "2":
-			foo = "Buyer Deposited";
-			break;
-		case "3":
-			foo = "Service Approved";
-			break;
-		case "4":
-			foo = "Escrow Complete";
-			break;
-		case "5":
-			foo = "Escrow Cancelled";
-			break;
-		default:
-			foo = "NA";
-	}
-
-
-  html += "<br><br><br><h5>Contract Status</h5><h4><b>" + foo + "</b></h4>"
+test.getEscrowContractAddress(function(error, contractAddress) {
+  html += "<hr><br><h5>Contract live at</h5><h4>" + contractAddress + "</h4>"
   document.getElementById("box").innerHTML = html;
-
-  if(eStatus != "0") {
-  	document.getElementById("inite").disabled = true;
-  }
-
-  if(eStatus == "3" || eStatus == "4" || eStatus == "5") {
-  	document.getElementById("bd").disabled = true;
-  	document.getElementById("eapp").disabled = true;
-  	document.getElementById("capp").disabled = true;
-  }
-
 });
 
 </script>
