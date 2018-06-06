@@ -69,23 +69,50 @@
   
 <div class="container-fluid text-center">    
   <div class="row content">
-    <div class="col-sm-3 text-center"> 
-    </div>
-    <div class="col-sm-6 text-center"> 
-      <br>
-      <a href="/"><button type="button" class="btn btn-success">Home</button></a>
+
+    <div class="col-sm-12 text-center"> 
+      <h3><b>Decentralised Escrow Platform</b></h3>
       <hr>
 
-      <form>
-        <button id="createnewcontract" type="button" class="btn btn-primary">Create New Escrow Contract</button>
-    </form>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-sm-6">
 
-    <br><hr>
+            <h3>Start a new Escrow Contract</h3>
+
+            <ul class="list-group">
+              <li class="list-group-item list-group-item-info">The address which <b>creates</b> the new Escrow contract is the <b>owner</b> of the contract. This address is responsible for correctly initializing the buyer and seller addresses as well as resolve disputes.</li>
+              <span class="glyphicon glyphicon-chevron-down"></span><br>
+              <li class="list-group-item list-group-item-info">The buyer can independently deposit ethers into the escrow <b>any number of times</b>.</li>
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-sm-6">
+              <span class="glyphicon glyphicon-chevron-down"></span><br>
+              <li class="list-group-item list-group-item-info">Both the buyer and the seller need to press the <b>Approve button</b> to get the deal approved. Once both have approved, the escrow will pay out the decided percentage of the contract deposits to the fee and the remaining to the seller <b>automatically</b>.</li><br>
+                  </div>
+                  <div class="col-sm-6">
+              <span class="glyphicon glyphicon-chevron-down"></span><br>
+              <li class="list-group-item list-group-item-info">In case both the buyer and seller decide not to go ahead with the escrow, both need to press the <b>Cancel button</b> to cancel the escrow. <b>No fee will be charged by the owner</b> in this case and the <b>entire buyer deposit</b> will be transferred back to the buyer.</li><br>
+                  </div>
+                </div>
+              </div>
+              <li class="list-group-item list-group-item-warning"><b>Neither the creators of the escrow platform nor the owner will have any authority to launder with the money deposited into the smart contract</b>. But they are <b>no way accountable for any monetary losses incurred</b>.</li>
+            </ul>
+
+            <form>
+              <button id="createnewcontract" type="button" class="btn btn-primary">Create New Escrow Contract</button>
+          </form>
+      
+        </div>
+
+        <div class="col-sm-6">
+
+          <h3>Load an existing Escrow Contract</h3>
 
     <form action="/initatecontract" method="post">
       <div class="input-group">
-        <span class="input-group-addon">Load Escrow Contract <b>by Address</b></span>
-        <input id="contractaddress" name="contractaddress" class="form-control" placeholder="Copy-paste an already created escrow from the list below">
+        <span class="input-group-addon">Load Escrow Contract</span>
+        <input id="contractaddress" name="contractaddress" class="form-control" placeholder="Copy-paste an already created escrow from the list below" required>
       </div>
         <br>
 
@@ -96,10 +123,10 @@
     <br><br>
     <h4><b>All escrows created on this platform:</b></h4>
     <div id= "box2"></div>
+    </div>
 
     </div>
-    <div class="col-sm-3 text-center"> 
-    </div>
+
   </div>
 </div>
 

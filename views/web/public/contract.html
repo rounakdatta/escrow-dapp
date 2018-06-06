@@ -86,13 +86,7 @@
     <form action="/cancel" method="post">
       <button type="submit" id="capp" class="btn btn-primary">Escrow Cancellation</button><br><br>
     </form>
-    <!--
-    <form action="/end" method="post">
-      <button type="submit" class="btn btn-primary">End Escrow</button>
-    </form>
-  -->
 
-      <br><hr>
       <div id= "myaddr"></div>
       <hr>
       <div id= "box"></div>
@@ -140,7 +134,7 @@ switch (netId) {
 var thisContract =  "<%= currentContract %>";
 console.log(thisContract);
 console.log(abiArray);
-document.getElementById("myaddr").innerHTML = thisContract;
+document.getElementById("myaddr").innerHTML = "<hr><br><h5>Contract live at</h5><h4>" + thisContract + "</h4>";
 
 web3.eth.defaultAccount=web3.eth.accounts[0];
 var testContract = web3.eth.contract(abiArray);

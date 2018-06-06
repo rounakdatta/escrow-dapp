@@ -80,19 +80,19 @@
       <form>
 		  <div class="input-group">
 		    <span class="input-group-addon">Seller Address</span>
-		    <input id="selleraddress" type="text" class="form-control" name="email" placeholder="Copy-Paste the seller address here (no quotes)">
+		    <input id="selleraddress" type="text" class="form-control" name="email" placeholder="Copy-Paste the seller address here (no quotes)" required>
 		  </div>
 		  <br>
 
 		  <div class="input-group">
 		    <span class="input-group-addon">Buyer Address</span>
-		    <input id="buyeraddress" type="text" class="form-control" name="password" placeholder="Copy-Paste the buyer address here (no quotes)">
+		    <input id="buyeraddress" type="text" class="form-control" name="password" placeholder="Copy-Paste the buyer address here (no quotes)" required>
 		  </div>
 		  <br>
 
 		  <div class="input-group">
 		    <span class="input-group-addon">Owner Fee %</span>
-		    <input id="ownerfee" type="text" class="form-control" name="msg" placeholder="Integers only">
+		    <input id="ownerfee" type="text" class="form-control" name="msg" placeholder="Integers only" required>
 		  </div>
 		  <br>
 
@@ -163,13 +163,14 @@ var test = testContract.at(thisContract);
 $("#createescrow").click(function() {
   test.initEscrow($("#selleraddress").val(),$("#buyeraddress").val(),$("#ownerfee").val(),$("#returndate").val(),(error,result) => (console.log(result)));
 
-  test.getEscrowContractAddress(function(error, result) {
-    html = "<br><br><hr><br><h5>A new contract has been created at</h5><h4>" + result + "</h4>"
-
-    document.getElementById("box").innerHTML = html;
-  });
-
 });
+
+var html = ""
+test.getEscrowContractAddress(function(error, contractAddress) {
+  html += "<hr><br><h5>Contract live at</h5><h4>" + contractAddress + "</h4>"
+  document.getElementById("box").innerHTML = html;
+});
+
 </script>
 
 </body>
