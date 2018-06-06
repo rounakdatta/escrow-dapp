@@ -44,6 +44,9 @@ contract Escrow {
     bool public sellerApproval;
     bool public buyerApproval;
     
+    bool public sellerCancel;
+    bool public buyerCancel;
+    
     uint256[] public deposits;
     uint256 public feeAmount;
     uint256 public sellerAmount;
@@ -146,11 +149,11 @@ contract Escrow {
 
     function cancelEscrow() public checkBlockNumber {
         if (msg.sender == seller) {
-            sellerApproval = false;
+            sellerCancel = true;
         } else if (msg.sender == buyer) {
-            buyerApproval = false;
+            buyerCancel = true;
         }
-        if (!sellerApproval && !buyerApproval) {
+        if (sellerCancel && buyerCancel) {
             eState = EscrowState.escrowCancelled;
             refund();
         }
@@ -186,6 +189,28 @@ contract Escrow {
         } else {
             return false;
         }
+    }
+    
+    function hasBuyerCancelled() public view returns (bool) {
+        if(buyerCancel) {
+            return true;
+        }
+        return false;
+    }
+    
+    function hasSellerCancelled() public view returns (bool) {
+        if(sellerCancel) {
+            return true;
+        }
+        return false;
+    }
+    
+    function getFeeAmount() public view returns (uint256) {
+        return feeAmount;
+    }
+    
+    function getSellermount() public view returns (uint256) {
+        return sellerAmount;
     }
     
     function totalEscrowBalance() public view returns (uint256) {
@@ -227,6 +252,6 @@ contract Escrow {
     }
 
     function refund() private {
-        selfdestruct(buyer);
+        buyer.transfer(address(this).balance);
     }
 }
