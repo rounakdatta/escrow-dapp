@@ -217,7 +217,7 @@ var factoryAbiArray = [
 
 web3.eth.defaultAccount=web3.eth.accounts[0];
 var testContract = web3.eth.contract(factoryAbiArray);
-var test = testContract.at("0xafe50472d6D1163442C60ad291802B36597bC600");
+var test = testContract.at("0xd83652a2189630f144b5de776591c98dd7899013");
 
 $("#createnewcontract").click(function() {
   test.createContract((error,result) => (console.log(result)));
