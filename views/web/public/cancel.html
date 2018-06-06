@@ -62,7 +62,7 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#"><span class="glyphicon glyphicon-chevron-left"></span> using Solidity & Node.js <span class="glyphicon glyphicon-chevron-right"></span></a></li>
+        <li><a><span class="glyphicon glyphicon-chevron-left"></span> using Solidity & Node.js <span class="glyphicon glyphicon-chevron-right"></span></a></li>
       </ul>
     </div>
   </div>
@@ -141,14 +141,14 @@ $("#cancel").click(function() {
 });
 
 var html2 = "<br>"
-test.hasBuyerApproved(function(error, result) {
-  html2 += "<hr><br><h5>Buyer Approval : <b>" + result + "</b></h5>"
+test.hasBuyerCancelled(function(error, result) {
+  html2 += "<hr><br><h5>Buyer Cancellation Status : <b>" + result + "</b></h5>"
   document.getElementById("box2").innerHTML = html2;
 });
 
 var html3 = ""
-test.hasSellerApproved(function(error, result) {
-  html3 += "<hr><br><h5>Seller approval : <b>" + result + "</b></h5>"
+test.hasSellerCancelled(function(error, result) {
+  html3 += "<hr><br><h5>Seller Cancellation Status : <b>" + result + "</b></h5>"
   document.getElementById("box3").innerHTML = html3;
 });
 

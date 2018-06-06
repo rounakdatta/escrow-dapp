@@ -61,7 +61,7 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#"><span class="glyphicon glyphicon-chevron-left"></span> using Solidity & Node.js <span class="glyphicon glyphicon-chevron-right"></span></a></li>
+        <li><a><span class="glyphicon glyphicon-chevron-left"></span> using Solidity & Node.js <span class="glyphicon glyphicon-chevron-right"></span></a></li>
       </ul>
     </div>
   </div>
@@ -69,7 +69,9 @@
   
 <div class="container-fluid text-center">    
   <div class="row content">
-    <div class="col-sm-12 text-center"> 
+    <div class="col-sm-3 text-center"> 
+    </div>
+    <div class="col-sm-6 text-center"> 
       <br>
       <a href="/"><button type="button" class="btn btn-success">Home</button></a>
       <hr>
@@ -83,7 +85,7 @@
     <form action="/initatecontract" method="post">
       <div class="input-group">
         <span class="input-group-addon">Load Escrow Contract <b>by Address</b></span>
-        <input id="contractaddress" name="contractaddress" class="form-control" name="email" placeholder="Email">
+        <input id="contractaddress" name="contractaddress" class="form-control" placeholder="Copy-paste an already created escrow from the list below">
       </div>
         <br>
 
@@ -91,8 +93,12 @@
 
     </form>
 
+    <br><br>
+    <h4><b>All escrows created on this platform:</b></h4>
     <div id= "box2"></div>
 
+    </div>
+    <div class="col-sm-3 text-center"> 
     </div>
   </div>
 </div>
@@ -224,7 +230,7 @@ $("#createnewcontract").click(function() {
 
 });
 
-  var html2 = "<br>"
+  var html2 = ""
   test.getAllContracts(function(error, allContracts) {
     html2 += "<ul class=\"list-group\">"
 
