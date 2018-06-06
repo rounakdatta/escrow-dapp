@@ -40,6 +40,10 @@ app.get('/', (req, res, next) => {
   res.render('web/public/index.html');
 });
 
+app.get('/contractpage', (req, res, next) => {
+  res.render('web/public/contract.html', {currentContract:currentContract});
+})
+
 app.post('/initatecontract', (req, res, next) => {
   currentContract = req.body.contractaddress;
   res.render('web/public/contract.html', {currentContract:currentContract});
