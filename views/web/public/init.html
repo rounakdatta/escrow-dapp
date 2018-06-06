@@ -128,6 +128,7 @@
      }
      else
      {
+       alert("Install MetaMask / other Web3 Injector to use this service");
        web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
      }
      web3.version.getNetwork((err, netId) => {
