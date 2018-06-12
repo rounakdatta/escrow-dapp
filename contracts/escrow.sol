@@ -1,5 +1,4 @@
-pragma solidity ^0.4.21;
-pragma experimental ABIEncoderV2;
+pragma solidity ^0.4.17;
 
 import "./SafeMath.sol";
 
@@ -53,16 +52,6 @@ contract Escrow {
 
     enum EscrowState { unInitialized, initialized, buyerDeposited, serviceApproved, escrowComplete, escrowCancelled }
     EscrowState public eState = EscrowState.unInitialized;
-
-    struct EscrowRecord {
-        address serviceman;
-        address client;
-        uint256 charge;
-        uint256 escrowFeePercent;
-        EscrowState escrowStatus;
-    }
-
-    mapping (uint => EscrowRecord) public allEscrows;
 
     event Deposit(address depositor, uint256 deposited);
     event ServicePayment(uint256 blockNo, uint256 contractBalance);
@@ -142,8 +131,6 @@ contract Escrow {
             fee();
             payOutFromEscrow();
             emit ServicePayment(block.number, address(this).balance); // solhint-disable-line
-
-            allEscrows[escrowID] = EscrowRecord({serviceman: seller, client: buyer, charge: escrowCharge, escrowFeePercent: feePercent, escrowStatus: EscrowState.serviceApproved}); // solhint-disable-line
         }
     }
 
@@ -227,10 +214,6 @@ contract Escrow {
     
     function getBlockNumber() public view returns (uint256) {
         return block.number;
-    }
-
-    function getEscrowRecord(uint id) public view returns (EscrowRecord) {
-        return allEscrows[id];
     }
 
     function killEscrow() internal {

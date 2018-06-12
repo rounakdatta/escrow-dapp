@@ -19,6 +19,7 @@
     "helmet": "3.11.0",
     "html": "^1.0.0",
     "solc": "0.4.20",
+    "solidity-coverage": "^0.5.4",
     "web3": "0.20.0",
     "web3-provider-engine": "^8.6.1"
   }

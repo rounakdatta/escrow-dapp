@@ -1,0 +1,782 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for contracts/escrow.sol</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">all files</a> / <a href="index.html">contracts/</a> escrow.sol
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">2.63% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>2/76</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/32</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">3.23% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>1/31</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">2.41% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>2/83</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">pragma solidity ^0.4.17;
+&nbsp;
+import "./SafeMath.sol";
+&nbsp;
+&nbsp;
+contract Factory {
+    
+    address[] public allEscrowContracts;
+    uint256 public escrowCount;
+    address public factoryOwner;
+    
+    function Factory() public {
+        factoryOwner = msg.sender;
+        escrowCount = 0;
+    }
+    
+<span class="fstat-no" title="function not covered" >    function createContract() publi</span>c {
+<span class="cstat-no" title="statement not covered" >        address newContract = new Escrow(factoryOwner, escrowCount++)</span>;
+        allEscrowContracts.push(newContract);
+    }
+    
+<span class="fstat-no" title="function not covered" >    function getAllContracts() public view returns (address[]</span>) {
+<span class="cstat-no" title="statement not covered" >        return allEscrowContracts;</span>
+    }
+    
+<span class="fstat-no" title="function not covered" >    function getByID(uint256 queryID) public view returns (address</span>) {
+<span class="cstat-no" title="statement not covered" >        return allEscrowContracts[queryID];</span>
+    }
+}
+    
+&nbsp;
+contract Escrow {
+    mapping (address =&gt; uint256) private balances;
+&nbsp;
+    address public seller;
+    address public buyer;
+    address public escrowOwner;
+    uint256 public blockNumber;
+    uint public feePercent;
+    uint public escrowID;
+    uint256 public escrowCharge;
+&nbsp;
+    bool public sellerApproval;
+    bool public buyerApproval;
+    
+    bool public sellerCancel;
+    bool public buyerCancel;
+    
+    uint256[] public deposits;
+    uint256 public feeAmount;
+    uint256 public sellerAmount;
+&nbsp;
+    enum EscrowState { unInitialized, initialized, buyerDeposited, serviceApproved, escrowComplete, escrowCancelled }
+    EscrowState public eState = EscrowState.unInitialized;
+&nbsp;
+    event Deposit(address depositor, uint256 deposited);
+    event ServicePayment(uint256 blockNo, uint256 contractBalance);
+&nbsp;
+<span class="fstat-no" title="function not covered" >    modifier onlyBuyer(</span>) {
+<span class="cstat-no" title="statement not covered" >        if (msg.sender == buyer) {</span>
+            _;
+        } else {
+<span class="cstat-no" title="statement not covered" >            revert()</span>;
+        }
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    modifier onlyEscrowOwner(</span>) {
+<span class="cstat-no" title="statement not covered" >        if (msg.sender == escrowOwner) {</span>
+            _;
+        } else {
+<span class="cstat-no" title="statement not covered" >            revert()</span>;
+        }
+    }    
+&nbsp;
+<span class="fstat-no" title="function not covered" >    modifier checkBlockNumber(</span>) {
+<span class="cstat-no" title="statement not covered" >        if (blockNumber &gt; block.number) {</span>
+            _;
+        } else {
+<span class="cstat-no" title="statement not covered" >            revert()</span>;
+        }
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    modifier ifApprovedOrCancelled(</span>) {
+<span class="cstat-no" title="statement not covered" >        if ((eState == EscrowState.serviceApproved) || (eState == EscrowState.escrowCancelled)) {</span>
+            _;
+        } else {
+<span class="cstat-no" title="statement not covered" >            revert()</span>;
+        }
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function Escrow(address fOwner, uint256 _escrowID) publi</span>c {
+<span class="cstat-no" title="statement not covered" >        escrowOwner = fOwner</span>;
+<span class="cstat-no" title="statement not covered" >        escrowID = _escrowID</span>;
+<span class="cstat-no" title="statement not covered" >        escrowCharge = 0</span>;
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function () publi</span>c { // solhint-disable-line
+        // fallback function to disallow any other deposits to the contract
+<span class="cstat-no" title="statement not covered" >        revert()</span>;
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function initEscrow(address _seller, address _buyer, uint _feePercent, uint256 _blockNum) public onlyEscrowOwne</span>r {
+<span class="cstat-no" title="statement not covered" >        require((_seller != msg.sender) &amp;&amp; (_buyer != msg.sender))</span>;
+<span class="cstat-no" title="statement not covered" >        escrowID += 1</span>;
+<span class="cstat-no" title="statement not covered" >        seller = _seller</span>;
+<span class="cstat-no" title="statement not covered" >        buyer = _buyer</span>;
+<span class="cstat-no" title="statement not covered" >        feePercent = _feePercent</span>;
+<span class="cstat-no" title="statement not covered" >        blockNumber = _blockNum</span>;
+<span class="cstat-no" title="statement not covered" >        eState = EscrowState.initialized</span>;
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        balances[seller] = 0</span>;
+<span class="cstat-no" title="statement not covered" >        balances[buyer] = 0</span>;
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function depositToEscrow() public payable checkBlockNumber onlyBuye</span>r {
+<span class="cstat-no" title="statement not covered" >        balances[buyer] = SafeMath.add(balances[buyer], msg.value)</span>;
+        deposits.push(msg.value);
+<span class="cstat-no" title="statement not covered" >        escrowCharge += msg.value</span>;
+<span class="cstat-no" title="statement not covered" >        eState = EscrowState.buyerDeposited</span>;
+<span class="cstat-no" title="statement not covered" >        emit Deposit(msg.sender, msg.value);</span> // solhint-disable-line
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function approveEscrow() publi</span>c {
+<span class="cstat-no" title="statement not covered" >        if (msg.sender == seller) {</span>
+<span class="cstat-no" title="statement not covered" >            sellerApproval = true</span>;
+        } else <span class="cstat-no" title="statement not covered" >if (msg.sender == buyer) {</span>
+<span class="cstat-no" title="statement not covered" >            buyerApproval = true</span>;
+        }
+<span class="cstat-no" title="statement not covered" >        if (sellerApproval &amp;&amp; buyerApproval) {</span>
+<span class="cstat-no" title="statement not covered" >            eState = EscrowState.serviceApproved</span>;
+<span class="cstat-no" title="statement not covered" >            fee()</span>;
+<span class="cstat-no" title="statement not covered" >            payOutFromEscrow()</span>;
+<span class="cstat-no" title="statement not covered" >            emit ServicePayment(block.number, address(this).balance);</span> // solhint-disable-line
+        }
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function cancelEscrow() public checkBlockNumbe</span>r {
+<span class="cstat-no" title="statement not covered" >        if (msg.sender == seller) {</span>
+<span class="cstat-no" title="statement not covered" >            sellerCancel = true</span>;
+        } else <span class="cstat-no" title="statement not covered" >if (msg.sender == buyer) {</span>
+<span class="cstat-no" title="statement not covered" >            buyerCancel = true</span>;
+        }
+<span class="cstat-no" title="statement not covered" >        if (sellerCancel &amp;&amp; buyerCancel) {</span>
+<span class="cstat-no" title="statement not covered" >            eState = EscrowState.escrowCancelled</span>;
+<span class="cstat-no" title="statement not covered" >            refund()</span>;
+        }
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function endEscrow() public ifApprovedOrCancelled onlyEscrowOwne</span>r {
+<span class="cstat-no" title="statement not covered" >        killEscrow()</span>;
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function checkEscrowStatus() public view returns (EscrowState</span>) {
+<span class="cstat-no" title="statement not covered" >        return eState;</span>
+    }
+    
+<span class="fstat-no" title="function not covered" >    function getEscrowContractAddress() public view returns (address</span>) {
+<span class="cstat-no" title="statement not covered" >        return address(this);</span>
+    }
+    
+<span class="fstat-no" title="function not covered" >    function getAllDeposits() public view returns (uint256[]</span>) {
+<span class="cstat-no" title="statement not covered" >        return deposits;</span>
+    }
+    
+<span class="fstat-no" title="function not covered" >    function hasBuyerApproved() public view returns (bool</span>) {
+<span class="cstat-no" title="statement not covered" >        if (buyerApproval) {</span>
+<span class="cstat-no" title="statement not covered" >            return true;</span>
+        } else {
+<span class="cstat-no" title="statement not covered" >            return false;</span>
+        }
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function hasSellerApproved() public view returns (bool</span>) {
+<span class="cstat-no" title="statement not covered" >        if (sellerApproval) {</span>
+<span class="cstat-no" title="statement not covered" >            return true;</span>
+        } else {
+<span class="cstat-no" title="statement not covered" >            return false;</span>
+        }
+    }
+    
+<span class="fstat-no" title="function not covered" >    function hasBuyerCancelled() public view returns (bool</span>) {
+<span class="cstat-no" title="statement not covered" >        if(buyerCancel) {</span>
+<span class="cstat-no" title="statement not covered" >            return true;</span>
+        }
+<span class="cstat-no" title="statement not covered" >        return false;</span>
+    }
+    
+<span class="fstat-no" title="function not covered" >    function hasSellerCancelled() public view returns (bool</span>) {
+<span class="cstat-no" title="statement not covered" >        if(sellerCancel) {</span>
+<span class="cstat-no" title="statement not covered" >            return true;</span>
+        }
+<span class="cstat-no" title="statement not covered" >        return false;</span>
+    }
+    
+<span class="fstat-no" title="function not covered" >    function getFeeAmount() public view returns (uint256</span>) {
+<span class="cstat-no" title="statement not covered" >        return feeAmount;</span>
+    }
+    
+<span class="fstat-no" title="function not covered" >    function getSellermount() public view returns (uint256</span>) {
+<span class="cstat-no" title="statement not covered" >        return sellerAmount;</span>
+    }
+    
+<span class="fstat-no" title="function not covered" >    function totalEscrowBalance() public view returns (uint256</span>) {
+<span class="cstat-no" title="statement not covered" >        return address(this).balance;</span>
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function hasEscrowExpired() public view returns (bool</span>) {
+<span class="cstat-no" title="statement not covered" >        if (blockNumber &gt; block.number) {</span>
+<span class="cstat-no" title="statement not covered" >            return false;</span>
+        } else {
+<span class="cstat-no" title="statement not covered" >            return true;</span>
+        }
+    }
+    
+<span class="fstat-no" title="function not covered" >    function getBlockNumber() public view returns (uint256</span>) {
+<span class="cstat-no" title="statement not covered" >        return block.number;</span>
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function killEscrow() interna</span>l {
+<span class="cstat-no" title="statement not covered" >        selfdestruct(escrowOwner)</span>;
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function payOutFromEscrow() privat</span>e {
+<span class="cstat-no" title="statement not covered" >        balances[buyer] = SafeMath.sub(balances[buyer], address(this).balance)</span>;
+<span class="cstat-no" title="statement not covered" >        balances[seller] = SafeMath.add(balances[seller], address(this).balance)</span>;
+<span class="cstat-no" title="statement not covered" >        eState = EscrowState.escrowComplete</span>;
+<span class="cstat-no" title="statement not covered" >        sellerAmount = address(this).balance</span>;
+        seller.transfer(address(this).balance);
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function fee() privat</span>e {
+<span class="cstat-no" title="statement not covered" >        uint totalFee = address(this).balance * (feePercent / 100)</span>;
+<span class="cstat-no" title="statement not covered" >        feeAmount = totalFee</span>;
+        escrowOwner.transfer(totalFee);
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function refund() privat</span>e {
+        buyer.transfer(address(this).balance);
+    }
+}</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Jun 12 2018 16:22:44 GMT+0530 (IST)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>
