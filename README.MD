@@ -1,4 +1,4 @@
-Escrow Smart Contract
+Escrow ÐApp - A sample Ethereum ÐApp over Node.js to get started for beginners
 
 ## Introduction
 
